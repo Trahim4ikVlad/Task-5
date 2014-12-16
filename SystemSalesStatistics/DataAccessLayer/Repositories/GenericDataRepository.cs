@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccessLayer
+namespace DataAccessLayer.Repositories
 {
-    public class GenericDataRepository<T> : IGenericDataRepository<T> where T : class
+    public class GenericDataRepository<T> : IGenericDataRepository<T> where T : class, new() 
     {
         public IList<T> GetAll()
         {
@@ -31,6 +33,26 @@ namespace DataAccessLayer
             }
             return list;
         }
+        public virtual IList<T> GetList(Func<T, bool> where,
+             params Expression<Func<T, object>>[] navigationProperties)
+        {
+            List<T> list;
+            using (var context = new DBEntities())
+            {
+                IQueryable<T> dbQuery = context.Set<T>();
+
+                //Apply eager loading
+                foreach (Expression<Func<T, object>> navigationProperty in navigationProperties)
+                    dbQuery = dbQuery.Include<T, object>(navigationProperty);
+
+                list = dbQuery
+                    .AsNoTracking()
+                    .Where(where)
+                    .ToList<T>();
+            }
+            return list;
+        }
+
 
         public T GetSingle(Func<T, bool> where)
         {

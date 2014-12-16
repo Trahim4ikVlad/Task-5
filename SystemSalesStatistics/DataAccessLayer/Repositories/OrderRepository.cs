@@ -9,6 +9,7 @@ namespace DataAccessLayer.Repositories
     public class OrderRepository : GenericDataRepository<Order>, IOrderRepository
     {
     }
+
     public interface IOrderRepository : IGenericDataRepository<Order>
     {
     }

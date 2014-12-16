@@ -4,66 +4,95 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessLayer.DTOEntity;
+using BusinessLayer.Mappers;
 using DataAccessLayer;
 using DataAccessLayer.Repositories;
+using AutoMapper;
 
 namespace BusinessLayer
 {
     public class Worker:IWorker
     {
-        private readonly IOrderRepository _orderRepository;
-        private readonly IClientRepository _clientRepository;
-        private readonly IManagerRepository _managerRepository;
+        private readonly IRepository _repository;
+        private OrderMapper _mapper;
 
         public Worker()
         {
-            _orderRepository = new OrderRepository();
-            _clientRepository = new ClientRepository();
-            _managerRepository = new ManagerRepository();
+           _repository = new Repository();
+           _mapper = new OrderMapper();
         }
 
-        public Worker(IOrderRepository orderRepository, IClientRepository clientRepository, IManagerRepository managerRepository)
+        public IList<OrderDto> GetAllOrders()
         {
-            _orderRepository = orderRepository;
-            _clientRepository = clientRepository;
-            _managerRepository = managerRepository;
+            return _mapper.Map(_repository.GetOrders());
         }
 
-        public IList<OrderViewModel> GetAllOrders()
+        public IList<OrderDto> GetOrders(Func<Order, bool> where)
         {
-            IList<OrderViewModel> orderViewModels = new List<OrderViewModel>();
-            foreach (var order in _orderRepository.GetAll())
-            {
-                orderViewModels.Add(order.ToOrderViewModel());
-            }
-            return orderViewModels;
+            return _mapper.Map(_repository.GetOrders(where));
         }
 
-        
-
-        public IList<OrderViewModel> FilterBy(Func<Order, bool> @where)
+        public void Add(OrderDto orderDto)
         {
-            throw new NotImplementedException();
+            _repository.Add(_mapper.Map(orderDto));
         }
 
-        public IList<OrderViewModel> FilterBy(params Expression<Func<Order, object>>[] navigationProperties)
+        public void Update(OrderDto orderDto)
         {
-            throw new NotImplementedException();
+            _repository.Update(_mapper.Map(orderDto));
+        }
+       
+        public void Remove(OrderDto orderDto)
+        {
+            _repository.Remove(_mapper.Map(orderDto));
         }
 
+        /*
         public void Add(params OrderViewModel[] orderViewModels)
         {
-            throw new NotImplementedException();
+            foreach (OrderViewModel model in orderViewModels)
+            {
+                var client = _clientRepository.GetSingle(x => x.Name == model.ClientName);
+                var manager = _managerRepository.GetSingle(x => x.Name == model.ManagerName);
+                
+                if (client == null)
+                {
+                    client = new Client()
+                    {
+                        Name = model.ClientName
+                    };
+
+                    _clientRepository.Add(client);
+                }
+                if (manager == null)
+                {
+                    manager = new Manager()
+                    {
+                        Name = model.ManagerName
+                    };
+                    _managerRepository.Add(manager);
+                }
+
+                _orderRepository.Add(ToOrder(model));
+            }
+            
         }
 
         public void Update(params OrderViewModel[] orderViewModels)
         {
-            throw new NotImplementedException();
+            foreach (OrderViewModel viewModel in orderViewModels)
+            {
+                _orderRepository.Update(ToOrder(viewModel));
+            }
         }
 
         public void Remove(params OrderViewModel[] orderViewModels)
         {
-            throw new NotImplementedException();
-        }
+            foreach (OrderViewModel viewModel in orderViewModels)
+            {
+                _orderRepository.Remove(ToOrder(viewModel));
+            }    
+        }*/
     }
 }

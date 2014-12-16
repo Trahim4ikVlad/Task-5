@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccessLayer;
 
 namespace BusinessLayer
 {
     public class OrderViewModel
     {
-        public int Id { get; set; }
         public DateTime OrderDate { get; set; }
         public string ClientName { get; set; }
         public string  ManagerName { get; set; }

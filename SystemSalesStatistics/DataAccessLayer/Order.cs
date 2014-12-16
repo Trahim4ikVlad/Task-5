@@ -11,8 +11,8 @@ namespace DataAccessLayer
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class Order
+
+    public partial class Order 
     {
         public int ID { get; set; }
         public System.DateTime OrderDate { get; set; }
