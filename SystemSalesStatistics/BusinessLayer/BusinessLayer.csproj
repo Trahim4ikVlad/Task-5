@@ -56,7 +56,13 @@
     <Compile Include="Mappers\MapperBase.cs" />
     <Compile Include="Mappers\OrderMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Specification\Specification.cs" />
+    <Compile Include="Specification\ClientOrdersSpecification.cs" />
+    <Compile Include="Specification\DateOrdersSpecification.cs" />
+    <Compile Include="Specification\IOrderSpecification.cs" />
+    <Compile Include="Specification\ManagerOrdersSpecification.cs" />
+    <Compile Include="Specification\ISpecification.cs" />
+    <Compile Include="Specification\ProductOrdersSpecification.cs" />
+    <Compile Include="Specification\SearchSpecification.cs" />
     <Compile Include="Worker.cs" />
   </ItemGroup>
   <ItemGroup>

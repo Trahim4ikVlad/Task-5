@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BusinessLayer.DTOEntity;
 
 namespace BusinessLayer.Specification
 {
-    public abstract class Specification<T> where T : class, new()
-    {
-        public abstract bool IsSatisfiedBy(T obj);
-
+    interface IOrderSpecification:ISpecification<OrderDto>
+    {   
     }
-
 }

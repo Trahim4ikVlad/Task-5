@@ -2,22 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using BusinessLayer.DTOEntity;
-using BusinessLayer.Mappers;
+using BusinessLayer.Specification;
 using DataAccessLayer;
-using AutoMapper;
+
 
 namespace BusinessLayer
 {
     public class Worker:IWorker
     {
         private readonly IRepository _repository;
-        private OrderMapper _mapper;
-       
 
         public Worker()
         {
            _repository = new Repository();
-           _mapper = new OrderMapper();
         }
 
         public IList<OrderDto> GetAllOrders()
@@ -34,6 +31,11 @@ namespace BusinessLayer
         { 
             Order order = _repository.GetOrder(where);
             return ToOrderDto(order);
+        }
+
+        public IEnumerable<OrderDto> Search(SearchSpecification specification)
+        {
+            return specification.SatisfiedBy(GetAllOrders());
         }
 
         public void Add(OrderDto orderDto)
@@ -56,7 +58,6 @@ namespace BusinessLayer
 
         public void Update(OrderDto orderDto)
         {
-            _repository.Update(_mapper.Map(orderDto));
         }
        
         public void Remove(OrderDto orderDto)
@@ -64,6 +65,7 @@ namespace BusinessLayer
             _repository.Remove(ToOrder(orderDto));
         }
 
+        #region conversion
         private Order ToOrder(OrderDto orderDto)
         {
             return new Order()
@@ -121,53 +123,6 @@ namespace BusinessLayer
                 Name = manager.Name
             };
         }
-
-
-        /*
-        public void Add(params OrderViewModel[] orderViewModels)
-        {
-            foreach (OrderViewModel model in orderViewModels)
-            {
-                var client = _clientRepository.GetSingle(x => x.Name == model.ClientName);
-                var manager = _managerRepository.GetSingle(x => x.Name == model.ManagerName);
-                
-                if (client == null)
-                {
-                    client = new Client()
-                    {
-                        Name = model.ClientName
-                    };
-
-                    _clientRepository.Add(client);
-                }
-                if (manager == null)
-                {
-                    manager = new Manager()
-                    {
-                        Name = model.ManagerName
-                    };
-                    _managerRepository.Add(manager);
-                }
-
-                _orderRepository.Add(ToOrder(model));
-            }
-            
-        }
-
-        public void Update(params OrderViewModel[] orderViewModels)
-        {
-            foreach (OrderViewModel viewModel in orderViewModels)
-            {
-                _orderRepository.Update(ToOrder(viewModel));
-            }
-        }
-
-        public void Remove(params OrderViewModel[] orderViewModels)
-        {
-            foreach (OrderViewModel viewModel in orderViewModels)
-            {
-                _orderRepository.Remove(ToOrder(viewModel));
-            }    
-        }*/
-    }
+        #endregion
+   }
 }
