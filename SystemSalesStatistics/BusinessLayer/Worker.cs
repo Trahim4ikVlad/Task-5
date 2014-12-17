@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using BusinessLayer.DTOEntity;
 using BusinessLayer.Mappers;
 using DataAccessLayer;
-using DataAccessLayer.Repositories;
 using AutoMapper;
 
 namespace BusinessLayer
@@ -16,6 +12,7 @@ namespace BusinessLayer
     {
         private readonly IRepository _repository;
         private OrderMapper _mapper;
+       
 
         public Worker()
         {
@@ -25,17 +22,36 @@ namespace BusinessLayer
 
         public IList<OrderDto> GetAllOrders()
         {
-            return _mapper.Map(_repository.GetOrders());
+            return _repository.GetOrders().Select(order => ToOrderDto(order)).ToList();
         }
 
         public IList<OrderDto> GetOrders(Func<Order, bool> where)
         {
-            return _mapper.Map(_repository.GetOrders(where));
+            return _repository.GetOrders(@where).Select(order => ToOrderDto(order)).ToList();
+        }
+
+        public OrderDto GetOrder(Func<Order, bool> @where)
+        { 
+            Order order = _repository.GetOrder(where);
+            return ToOrderDto(order);
         }
 
         public void Add(OrderDto orderDto)
         {
-            _repository.Add(_mapper.Map(orderDto));
+            var client = _repository.GetClient(x => x.Name == orderDto.Client.Name);
+            var manager = _repository.GetManager(x => x.Name == orderDto.Manager.Name);
+
+            if (client == null)
+            {
+                client = ToClient(orderDto.Client);
+                _repository.Add(client);
+            }
+            if (manager == null)
+            {
+                manager = ToManager(orderDto.Manager);
+                _repository.Add(manager);
+            }
+            _repository.Add(ToOrder(orderDto));
         }
 
         public void Update(OrderDto orderDto)
@@ -45,8 +61,67 @@ namespace BusinessLayer
        
         public void Remove(OrderDto orderDto)
         {
-            _repository.Remove(_mapper.Map(orderDto));
+            _repository.Remove(ToOrder(orderDto));
         }
+
+        private Order ToOrder(OrderDto orderDto)
+        {
+            return new Order()
+            {
+                Client = ToClient(orderDto.Client),
+                Manager = ToManager(orderDto.Manager),
+                ProductName = orderDto.ProductName,
+                Cost = orderDto.Cost,
+                OrderDate = orderDto.OrderDate,
+            };
+        }
+
+        private Client ToClient(ClientDto clientDto)
+        {
+            return new Client()
+            {
+                Name = clientDto.Name
+            };
+        }
+
+        private Manager ToManager(ManagerDto managerDto)
+        {
+            return new Manager()
+            {
+                Name = managerDto.Name
+            };
+        }
+        private OrderDto ToOrderDto(Order order)
+        {
+            return new OrderDto()
+            {
+                Id = order.ID,
+                Cost = order.Cost,
+                OrderDate = order.OrderDate,
+                ProductName = order.ProductName,
+                Client = ToClientDto(_repository.GetClient(x => x.ID == order.ClientID)),
+                Manager = ToManagerDto(_repository.GetManager(x => x.ID == order.ManagerID))
+            };
+        }
+
+        private ClientDto ToClientDto(Client client)
+        {
+            return new ClientDto()
+            {
+                Id = client.ID,
+                Name = client.Name
+            };
+        }
+
+        private ManagerDto ToManagerDto(Manager manager)
+        {
+            return new ManagerDto()
+            {
+                ID = manager.ID,
+                Name = manager.Name
+            };
+        }
+
 
         /*
         public void Add(params OrderViewModel[] orderViewModels)

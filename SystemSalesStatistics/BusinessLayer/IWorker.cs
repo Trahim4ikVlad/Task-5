@@ -13,6 +13,7 @@ namespace BusinessLayer
     {
         IList<OrderDto> GetAllOrders();
         IList<OrderDto> GetOrders(Func<Order, bool> where);
+        OrderDto GetOrder(Func<Order, bool> where); 
 
         void Add(OrderDto orderDto);
         void Update(OrderDto orderDto);

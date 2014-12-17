@@ -22,16 +22,27 @@ namespace ConsoleClient
                 Name = "Retut"
             };
 
-            ClientMapper clientMapper = new ClientMapper();
-
-            ClientDto clientDto = clientMapper.Map(client);
-
             foreach (var order in worker.GetAllOrders())
             {
-                Console.WriteLine(order.Id + " " + order.Client.Name + " " + order.Cost);
+                Console.WriteLine(order.ProductName);
             }
-            Console.WriteLine(clientDto.Id + " " + clientDto.Name);
 
+            OrderDto orderDto = new OrderDto()
+            {
+                Manager = new ManagerDto()
+                {
+                    Name = "PEtrov"
+                },
+                Client = new ClientDto()
+                {
+                    Name = "Sososcin"
+                },
+                Cost = 250,
+                OrderDate = DateTime.Now,
+                ProductName = "Sup"
+            };
+            worker.Add(orderDto);
+            //worker.Remove(orderDto);
         }
     }
 }
