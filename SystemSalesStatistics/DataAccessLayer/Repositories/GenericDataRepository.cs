@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -95,7 +96,9 @@ namespace DataAccessLayer.Repositories
             {
                 foreach (T item in items)
                 {
+                   
                     context.Entry(item).State = System.Data.EntityState.Deleted;
+                   // context.Set<T>().Remove(item);
                 }
                 context.SaveChanges();
             }

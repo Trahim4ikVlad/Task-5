@@ -13,7 +13,7 @@ using AspMvcClient.Models;
 
 namespace AspMvcClient.Controllers
 {
-    [Authorize]
+    [RoledAuthorize]
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
@@ -60,7 +60,7 @@ namespace AspMvcClient.Controllers
         //
         // GET: /Account/Register
 
-        [AllowAnonymous]
+        [Authorize(Roles = "Administrator")]
         public ActionResult Register()
         {
             return View();
@@ -70,7 +70,7 @@ namespace AspMvcClient.Controllers
         // POST: /Account/Register
 
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Administrator")]
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
         {

@@ -28,7 +28,7 @@ namespace DataAccessLayer
         IList<Manager> GetManagers(Func<Manager, bool> where);
         IList<Order> GetOrders(Func<Order, bool> where);
 
-        Client GetClient(Func<Client, bool> where);
+        Client GetClient(Func<Client, bool> @where);
         Manager GetManager(Func<Manager, bool> where);
         Order GetOrder(Func<Order, bool> where);
     }

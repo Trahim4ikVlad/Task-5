@@ -9,7 +9,7 @@ namespace BusinessLayer.DTOEntity
 {
     public class ManagerDto
     {
-        public int ID { get; set; }
+        public int? ID { get; set; }
         public string Name { get; set; }
 
         public virtual ICollection<OrderDto> Orders { get; set; }

@@ -9,7 +9,7 @@ namespace BusinessLayer.DTOEntity
 {
     public class OrderDto
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         
         public System.DateTime OrderDate { get; set; }
         public string ProductName { get; set; }

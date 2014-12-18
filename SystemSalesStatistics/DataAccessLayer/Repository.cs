@@ -95,7 +95,7 @@ namespace DataAccessLayer
             return _orderRepository.GetList(where);
         }
 
-        public Client GetClient(Func<Client, bool> where)
+        public Client GetClient(Func<Client, bool> @where)
         {
             return  _clientRepository.GetSingle(where);
         }

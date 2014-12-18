@@ -18,7 +18,10 @@ namespace BusinessLayer.Specification
 
         public IEnumerable<OrderDto> SatisfiedBy(IEnumerable<OrderDto> orders)
         {
-            if (_dateTime != null) return orders.Where(x => x.OrderDate == _dateTime);
+           if (!( _dateTime == default(DateTime)))
+            {
+                return orders.Where(x => x.OrderDate.ToShortDateString() == _dateTime.ToShortDateString());
+            }
             return orders;
         }
     }

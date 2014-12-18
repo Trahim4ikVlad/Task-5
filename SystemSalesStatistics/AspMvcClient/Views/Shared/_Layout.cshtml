@@ -12,7 +12,7 @@
         <header>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
+                    <p class="site-title">@Html.ActionLink("System sales statictic", "Index", "Home")</p>
                 </div>
                 <div class="float-right">
                     <section id="login">
@@ -20,9 +20,24 @@
                     </section>
                     <nav>
                         <ul id="menu">
+                            @if (User.IsInRole("Administrator"))
+                            {
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                                <li>@Html.ActionLink("Managment orders", "List", "Administrator")</li>
+                                  <li>@Html.ActionLink("Create new order", "Create", "Administrator")</li>
+                            <li>@Html.ActionLink("Managment users", "ListUser", "Administrator")</li>
+                             
+                             <li>@Html.ActionLink("Register new", "Register", "Account")</li> 
                             <li>@Html.ActionLink("About", "About", "Home")</li>
+                            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>  
+                            }
+                            else
+                            {
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                                <li>@Html.ActionLink("About", "About", "Home")</li>
+                                 <li>@Html.ActionLink("Statistics", "About", "Home")</li>
                             <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                            }
                         </ul>
                     </nav>
                 </div>
@@ -37,7 +52,7 @@
         <footer>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
+                    <p>&copy; @DateTime.Now.ToShortDateString() - System sales statistics</p>
                 </div>
             </div>
         </footer>

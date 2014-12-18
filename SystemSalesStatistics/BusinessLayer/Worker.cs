@@ -58,6 +58,22 @@ namespace BusinessLayer
 
         public void Update(OrderDto orderDto)
         {
+
+            Client client = _repository.GetClient(x=>x.ID==orderDto.Client.Id);
+
+            if (client.Name != orderDto.Client.Name)
+            {
+                client.Name = orderDto.Client.Name;
+                _repository.Update(client);
+            }
+            Manager manager = _repository.GetManager(x => x.ID == orderDto.Manager.ID);
+            if (manager.Name != orderDto.Manager.Name)
+            {
+                manager.Name = orderDto.Manager.Name;
+                _repository.Update(manager);
+            }
+
+            _repository.Update(ToOrder(orderDto));
         }
        
         public void Remove(OrderDto orderDto)
@@ -70,8 +86,11 @@ namespace BusinessLayer
         {
             return new Order()
             {
+                ID = (int) orderDto.Id,
                 Client = ToClient(orderDto.Client),
                 Manager = ToManager(orderDto.Manager),
+                ClientID = (int) orderDto.Client.Id,
+                ManagerID = (int) orderDto.Manager.ID,
                 ProductName = orderDto.ProductName,
                 Cost = orderDto.Cost,
                 OrderDate = orderDto.OrderDate,
@@ -80,8 +99,11 @@ namespace BusinessLayer
 
         private Client ToClient(ClientDto clientDto)
         {
+            Client client = _repository.GetClient(x => x.Name == clientDto.Name);
+
             return new Client()
             {
+                ID = client.ID,
                 Name = clientDto.Name
             };
         }
@@ -90,6 +112,7 @@ namespace BusinessLayer
         {
             return new Manager()
             {
+                ID = (int) managerDto.ID,
                 Name = managerDto.Name
             };
         }

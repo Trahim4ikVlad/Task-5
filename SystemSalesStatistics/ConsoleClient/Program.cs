@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BusinessLayer;
 using BusinessLayer.DTOEntity;
 using BusinessLayer.Mappers;
+using BusinessLayer.Specification;
 using DataAccessLayer;
 
 namespace ConsoleClient
@@ -14,35 +15,23 @@ namespace ConsoleClient
     {
         static void Main(string[] args)
         {
-            var worker = new Worker();
+            IWorker worker = new Worker();
 
-            Client client = new Client()
+           var orderDto =  worker.Search(new SearchSpecification()
             {
-                ID = 1,
-                Name = "Retut"
-            };
+                ClientName = "Sososcin",
+            });
 
-            foreach (var order in worker.GetAllOrders())
+            Console.WriteLine("fsfs");
+
+            if (orderDto != null)
             {
-                Console.WriteLine(order.ProductName);
+                //orderDto.Client.Name = "TETYTO";
+
+               // worker.Update(orderDto);
             }
+            
 
-            OrderDto orderDto = new OrderDto()
-            {
-                Manager = new ManagerDto()
-                {
-                    Name = "PEtrov"
-                },
-                Client = new ClientDto()
-                {
-                    Name = "Sososcin"
-                },
-                Cost = 250,
-                OrderDate = DateTime.Now,
-                ProductName = "Sup"
-            };
-            worker.Add(orderDto);
-            //worker.Remove(orderDto);
         }
     }
 }
