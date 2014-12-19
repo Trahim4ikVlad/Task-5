@@ -198,10 +198,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\ClientModel.cs" />
-    <Compile Include="Models\ManagerModel.cs" />
     <Compile Include="Models\ManagmentUsersModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
+    <Compile Include="Models\SearchModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -317,6 +316,8 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Administrator\List.cshtml" />
     <Content Include="Views\Administrator\Create.cshtml" />
+    <Content Include="Views\Administrator\EditOrder.cshtml" />
+    <Content Include="Views\Administrator\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

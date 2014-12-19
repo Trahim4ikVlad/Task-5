@@ -1,0 +1,50 @@
+﻿@model AspMvcClient.Models.OrderModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>OrderModel</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.OrderDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.OrderDate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ProductName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ProductName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Cost)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Cost)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ClientName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ClientName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ManagerName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ManagerName)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "EditOrder", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "List")
+</p>

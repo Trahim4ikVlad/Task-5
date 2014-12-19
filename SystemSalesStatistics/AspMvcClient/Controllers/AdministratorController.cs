@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -8,6 +9,7 @@ using AspMvcClient.Models;
 using BusinessLayer;
 using AutoMapper;
 using BusinessLayer.DTOEntity;
+using BusinessLayer.Specification;
 using WebMatrix.WebData;
 
 
@@ -16,17 +18,14 @@ namespace AspMvcClient.Controllers
     [Authorize(Roles = "Administrator")]
     public class AdministratorController : Controller
     {
-        //
-        // GET: /Administrator/
-        private readonly IWorker _worker = new Worker();
-        
+       private  readonly IWorker _worker = new Worker();
+
 
         public ActionResult List()
         {
-            IList<OrderModel> orderModels = _worker.GetAllOrders().ToOrderModels();
-            return View(orderModels);
+            return View(_worker.GetAllOrders().ToOrderModels());
         }
-         
+
         public ActionResult Create()
         {
             return View();
@@ -35,96 +34,121 @@ namespace AspMvcClient.Controllers
         [HttpPost]
         public ActionResult Create(OrderModel orderModel)
         {
-            if (ModelState.IsValid)
+
+            if (orderModel != null)
             {
-                if(orderModel!=null)
                 _worker.Add(orderModel.ToOrderDto());
-                return RedirectToAction("List");
             }
-            else
-            {
-                return View(orderModel);
-            }
+
+            return RedirectToAction("List"); ;
         }
 
-    }
+        [HttpGet]
+        public ActionResult EditOrder(int? id)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            OrderModel orderModel = _worker.GetOrder(x=>x.Id ==id).ToOrderModel();
+            return View(orderModel);
+        }
 
+        [HttpPost]
+        public ActionResult EditOrder(OrderModel order)
+        {
+            _worker.Update(order.ToOrderDto());
+            return RedirectToAction("List");
+        }
+
+
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            OrderModel model = _worker.GetOrder(x=>x.Id==id).ToOrderModel();
+            if (model == null)
+            {
+                return HttpNotFound();
+            }
+            return View(model);
+        }
+        /*
+        public ActionResult Search()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Search(SearchModel model)
+        {
+            if (model != null)
+            {
+                //_worker.Search(model.ToSearchSpecification());
+            }
+            return View();
+        }
+        */
+    }
+    #region
+    
     public static class ExtensionsMethod
     {
-        public static ClientModel ToClientModel(this ClientDto clientDto)
+
+        public static SearchSpecification ToSearchSpecification(this SearchModel model)
         {
-            return new ClientModel()
+            return new SearchSpecification()
             {
-                Id = (int) clientDto.Id,
-                Name = clientDto.Name
+                ClientName = model.ClientName,
+                ManagerName = model.ManagerName,
+                OrderDate = model.OrderDate,
+                ProductName = model.ProductName
             };
         }
 
-        public static IList<OrderModel> ToOrderModels(this IEnumerable<OrderDto> orderDtos)
+        public static IEnumerable<OrderModel> ToOrderModels(this IEnumerable<OrderDto> orderDtos)
         {
             return orderDtos.Select(order => order.ToOrderModel()).ToList();
         }
-
-        public static IList<ClientModel> ToClientModels(this IEnumerable<ClientDto> clientDtos)
-        {
-            return clientDtos.Select(client => client.ToClientModel()).ToList();
-        }
-
-        public static IList<ManagerModel> ToManagerModels(this IEnumerable<ManagerDto> managerDtos )
-        {
-            return managerDtos.Select(manager => manager.ToManagerModel()).ToList();
-        }
-        public static ManagerModel ToManagerModel(this ManagerDto managerDto)
-        {
-            return new ManagerModel()
-            {
-                Id = (int) managerDto.ID,
-                Name = managerDto.Name
-            };
-        }
-
         public static OrderModel ToOrderModel(this OrderDto orderDto)
         {
             return new OrderModel()
             {
-                Id = (int) orderDto.Id,
-                Client = ToClientModel(orderDto.Client),
-                Manager = ToManagerModel(orderDto.Manager),
+                Id =  orderDto.Id,
+                ClientName = orderDto.Client.Name,
+                ManagerName = orderDto.Manager.Name,
                 Cost = orderDto.Cost,
                 OrderDate = orderDto.OrderDate,
                 ProductName = orderDto.ProductName
             };
         }
 
-        public static OrderDto ToOrderDto(this OrderModel orderModel)
+        public static OrderDto ToOrderDto(this OrderModel model)
         {
             return new OrderDto()
             {
-                Id = orderModel.Id,
-                Client = orderModel.Client.ToClientDto(),
-                Manager = orderModel.Manager.ToManagerDto(),
-                Cost = orderModel.Cost,
-                OrderDate = orderModel.OrderDate,
-                ProductName = orderModel.ProductName
+                Client = new ClientDto()
+                {
+                    Name = model.ClientName
+                },
+                Manager = new ManagerDto()
+                {
+                    Name = model.ManagerName
+                },
+                Id = model.Id,
+                Cost = model.Cost,
+                OrderDate = model.OrderDate,
+                ProductName = model.ProductName
             };
         }
 
-        public static ManagerDto ToManagerDto(this ManagerModel managerModel)
+        public static IEnumerable<OrderDto> ToOrderDtos(this IEnumerable<OrderModel>  orderModels)
         {
-            return new ManagerDto()
-            {
-                Name = managerModel.Name,
-                ID = managerModel.Id
-            };
+            return orderModels.Select(x => x.ToOrderDto());
         }
-
-        public static ClientDto ToClientDto(this ClientModel clientModel)
-        {
-            return new ClientDto()
-            {
-                Id = clientModel.Id,
-                Name = clientModel.Name
-            };
-        }
+        
     }
+    #endregion
 }

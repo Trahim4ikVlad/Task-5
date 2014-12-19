@@ -10,22 +10,16 @@ namespace AspMvcClient.Models
 {
     public class ManagmentUsersModel 
     {
-        
-        [Display(Name = "User name")]
+        [Display(Name = "User")]
         public string UserName { get; set; }
 
         [Display(Name = "Password")]
         public string Password { get; set; }
 
-        [Display(Name = "DateCreation")]
+        [Display(Name = "Date creation")]
         public DateTime DateCreation { get; set; }
 
-        [Display(Name = "LastActivitiTime")]
-        public DateTime LastActivitiTime { get; set; }
-
-        public IEnumerator GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
+        [Display(Name = "Last activity time")]
+        public DateTime LastActivityTime { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace BusinessLayer
     {
         IList<OrderDto> GetAllOrders();
         IList<OrderDto> GetOrders(Func<Order, bool> where);
-        OrderDto GetOrder(Func<Order, bool> where);
+        OrderDto GetOrder(Func<OrderDto, bool> where);
 
         IEnumerable<OrderDto> Search(SearchSpecification specification);
         

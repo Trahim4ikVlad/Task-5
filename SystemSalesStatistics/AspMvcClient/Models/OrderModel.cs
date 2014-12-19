@@ -9,7 +9,7 @@ namespace AspMvcClient.Models
 {
     public class OrderModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Display(Name = " Date")]
         [Required]
@@ -25,10 +25,10 @@ namespace AspMvcClient.Models
 
         [Display(Name = " Client")]
         [Required]
-        public ClientModel Client { get; set; }
+        public string ClientName { get; set; }
        
-        [Display(Name = " Client name")]
+        [Display(Name = "Manager")]
         [Required]
-        public ManagerModel Manager { get; set; }
+        public string ManagerName { get; set; }
     }
 }

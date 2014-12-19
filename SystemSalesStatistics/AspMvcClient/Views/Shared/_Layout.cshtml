@@ -22,14 +22,16 @@
                         <ul id="menu">
                             @if (User.IsInRole("Administrator"))
                             {
-                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>@*
                                 <li>@Html.ActionLink("Managment orders", "List", "Administrator")</li>
                                   <li>@Html.ActionLink("Create new order", "Create", "Administrator")</li>
-                            <li>@Html.ActionLink("Managment users", "ListUser", "Administrator")</li>
+                            <li>@Html.ActionLink("Managment users", "ListUser", "Administrator")</li>*@
                              
-                             <li>@Html.ActionLink("Register new", "Register", "Account")</li> 
+                             <li>@Html.ActionLink("Registration user", "Register", "Account")</li> 
                             <li>@Html.ActionLink("About", "About", "Home")</li>
                             <li>@Html.ActionLink("Contact", "Contact", "Home")</li>  
+                            <li>@Html.ActionLink("Managment orders", "List", "Administrator")</li>  
+                                 <li>@Html.ActionLink("Create orders", "Create", "Administrator")</li>    
                             }
                             else
                             {

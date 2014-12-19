@@ -1,10 +1,10 @@
 ﻿@model AspMvcClient.Models.OrderModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "EditOrder";
 }
 
-<h2>Create</h2>
+<h2>EditOrder</h2>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
@@ -12,6 +12,8 @@
 
     <fieldset>
         <legend>OrderModel</legend>
+
+        @Html.HiddenFor(model => model.Id)
 
         <div class="editor-label">
             @Html.LabelFor(model => model.OrderDate)
@@ -52,9 +54,8 @@
             @Html.EditorFor(model => model.ManagerName)
             @Html.ValidationMessageFor(model => model.ManagerName)
         </div>
-
         <p>
-            <input type="submit" value="Create" />
+            <input type="submit" value="Save" />
         </p>
     </fieldset>
 }

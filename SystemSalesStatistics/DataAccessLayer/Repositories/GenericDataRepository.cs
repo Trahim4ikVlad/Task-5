@@ -98,7 +98,7 @@ namespace DataAccessLayer.Repositories
                 {
                    
                     context.Entry(item).State = System.Data.EntityState.Deleted;
-                   // context.Set<T>().Remove(item);
+                  // context.Set<T>().Remove(item);
                 }
                 context.SaveChanges();
             }

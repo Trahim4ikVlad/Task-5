@@ -27,10 +27,10 @@ namespace BusinessLayer
             return _repository.GetOrders(@where).Select(order => ToOrderDto(order)).ToList();
         }
 
-        public OrderDto GetOrder(Func<Order, bool> @where)
+        public OrderDto GetOrder(Func<OrderDto, bool> @where)
         { 
-            Order order = _repository.GetOrder(where);
-            return ToOrderDto(order);
+            OrderDto order = ToOrderDto(_repository.GetOrder(@where as Func<Order, bool>));
+            return order;
         }
 
         public IEnumerable<OrderDto> Search(SearchSpecification specification)
@@ -58,53 +58,72 @@ namespace BusinessLayer
 
         public void Update(OrderDto orderDto)
         {
-
-            Client client = _repository.GetClient(x=>x.ID==orderDto.Client.Id);
+            Order order = _repository.GetOrder(x => x.ID == orderDto.Id);
+            Client client = _repository.GetClient(x => x.ID == order.ClientID);
+            Manager manager = _repository.GetManager(x => x.ID == order.ManagerID); 
 
             if (client.Name != orderDto.Client.Name)
-            {
+            { 
                 client.Name = orderDto.Client.Name;
                 _repository.Update(client);
             }
-            Manager manager = _repository.GetManager(x => x.ID == orderDto.Manager.ID);
-            if (manager.Name != orderDto.Manager.Name)
+             if (manager.Name != orderDto.Manager.Name)
             {
                 manager.Name = orderDto.Manager.Name;
                 _repository.Update(manager);
             }
-
-            _repository.Update(ToOrder(orderDto));
+             if (order.OrderDate != orderDto.OrderDate || 
+                 order.Cost != orderDto.Cost || 
+                 order.ProductName != orderDto.ProductName)
+            {
+                order.OrderDate = orderDto.OrderDate;
+                order.Cost = orderDto.Cost;
+                order.ProductName = orderDto.ProductName;
+                _repository.Update(order);
+            }   
         }
        
         public void Remove(OrderDto orderDto)
         {
-            _repository.Remove(ToOrder(orderDto));
+            Order order = _repository.GetOrder(x => x.ID == orderDto.Id);
+            _repository.Remove(order);
         }
 
         #region conversion
         private Order ToOrder(OrderDto orderDto)
         {
+            Client client = _repository.GetClient(x => x.Name == orderDto.Client.Name);
+            Manager manager = _repository.GetManager(x => x.Name == orderDto.Manager.Name);
+
+            if (client != null && manager != null)
+            {
+                return new Order()
+                {
+                    ClientID = client.ID,
+                    ManagerID = manager.ID,
+                    //Client = client,
+                    //Manager = manager,
+                    ProductName = orderDto.ProductName,
+                    Cost = orderDto.Cost,
+                    OrderDate = orderDto.OrderDate,
+                };
+            }
             return new Order()
             {
-                ID = (int) orderDto.Id,
                 Client = ToClient(orderDto.Client),
                 Manager = ToManager(orderDto.Manager),
-                ClientID = (int) orderDto.Client.Id,
-                ManagerID = (int) orderDto.Manager.ID,
                 ProductName = orderDto.ProductName,
                 Cost = orderDto.Cost,
                 OrderDate = orderDto.OrderDate,
             };
+            
         }
 
         private Client ToClient(ClientDto clientDto)
         {
-            Client client = _repository.GetClient(x => x.Name == clientDto.Name);
-
             return new Client()
             {
-                ID = client.ID,
-                Name = clientDto.Name
+                Name = clientDto.Name,
             };
         }
 
@@ -112,7 +131,6 @@ namespace BusinessLayer
         {
             return new Manager()
             {
-                ID = (int) managerDto.ID,
                 Name = managerDto.Name
             };
         }
