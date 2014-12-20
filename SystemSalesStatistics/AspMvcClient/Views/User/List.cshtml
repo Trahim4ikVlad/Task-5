@@ -1,5 +1,4 @@
-﻿
-@using PagedList.Mvc
+﻿@using PagedList.Mvc
 @model  PagedList.IPagedList<AspMvcClient.Models.OrderModel>
 
 @{
@@ -9,15 +8,11 @@
 <script src="@Url.Content("~/Scripts/jquery-ui-1.8.24.min.js")" type="text/javascript"></script>
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 <h2>List</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
+<h2>List</h2>
 <div id="content">
     <table>
         <tr>
-            <th>
+           <th>
                 Date
             </th>
             <th>
@@ -49,20 +44,15 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.ClientName)
                 </td>
-
                 <td>
                     @Html.DisplayFor(modelItem => item.ManagerName)
                 </td>
-                <td>
-                    @Html.ActionLink("Edit", "EditOrder", new { id=item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-                </td>
             </tr>
         }
-
     </table>
+    
     <br />
  Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
  
            @Html.PagedListPager(Model, page => Url.Action("List",  new { page }))
- </div>
+</div>

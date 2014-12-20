@@ -19,21 +19,17 @@ namespace ConsoleClient
 
             OrderModel model = new OrderModel()
             {
-               ManagerName = "Petuxov",
-                ClientName = "Qetynov",
-              Cost = 20,
+                Id = 3406,
+               ManagerName = "Sidorov",
+                ClientName = "Put",
+                Cost = 20,
                OrderDate = DateTime.Now,
              ProductName = "Orbit"
            };
 
-            worker.Add(model.ToOrderDto());
-
-            OrderDto order = worker.Search(new SearchSpecification()
-            {
-                ProductName = "Orbit"
-            }).FirstOrDefault();
-
-            worker.Remove(order);
+         //worker.Update(model.ToOrderDto());
+           // worker.Remove(model.ToOrderDto());
+           
         }
     }
     public class OrderModel
@@ -73,7 +69,6 @@ namespace ConsoleClient
 
         public static OrderDto ToOrderDto(this OrderModel model)
         {
-
             return new OrderDto()
             {
                 Client = new ClientDto()

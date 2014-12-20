@@ -18,7 +18,7 @@ namespace DataAccessLayer.Repositories
             using (var context = new DBEntities())
             {
                 IQueryable<T> dbQuery = context.Set<T>();
-                list = dbQuery.ToList<T>();
+                list = dbQuery.ToList();
             }
 
             return list;
@@ -34,6 +34,7 @@ namespace DataAccessLayer.Repositories
             }
             return list;
         }
+       
         public virtual IList<T> GetList(Func<T, bool> where,
              params Expression<Func<T, object>>[] navigationProperties)
         {
@@ -42,7 +43,6 @@ namespace DataAccessLayer.Repositories
             {
                 IQueryable<T> dbQuery = context.Set<T>();
 
-                //Apply eager loading
                 foreach (Expression<Func<T, object>> navigationProperty in navigationProperties)
                     dbQuery = dbQuery.Include<T, object>(navigationProperty);
 
@@ -98,7 +98,6 @@ namespace DataAccessLayer.Repositories
                 {
                    
                     context.Entry(item).State = System.Data.EntityState.Deleted;
-                  // context.Set<T>().Remove(item);
                 }
                 context.SaveChanges();
             }

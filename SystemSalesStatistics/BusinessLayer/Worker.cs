@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using BusinessLayer.DTOEntity;
 using BusinessLayer.Specification;
 using DataAccessLayer;
@@ -27,15 +28,20 @@ namespace BusinessLayer
             return _repository.GetOrders(@where).Select(order => ToOrderDto(order)).ToList();
         }
 
-        public OrderDto GetOrder(Func<OrderDto, bool> @where)
+        public OrderDto GetOrderBy(int id)
         { 
-            OrderDto order = ToOrderDto(_repository.GetOrder(@where as Func<Order, bool>));
+            OrderDto order = ToOrderDto(_repository.GetOrder(x=>x.ID==id));
             return order;
         }
 
         public IEnumerable<OrderDto> Search(SearchSpecification specification)
         {
             return specification.SatisfiedBy(GetAllOrders());
+        }
+
+        public IEnumerable<OrderDto> OrderBy(Func<OrderDto, string> @where)
+        {
+            return _repository.GetOrders().Select(x => ToOrderDto(x)).OrderBy(where);
         }
 
         public void Add(OrderDto orderDto)

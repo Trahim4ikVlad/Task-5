@@ -12,8 +12,9 @@ namespace AspMvcClient.Models
         public int? Id { get; set; }
 
         [Display(Name = " Date")]
-        [Required]
-        public System.DateTime OrderDate { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd'/'MM'/'yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime OrderDate { get; set; }
 
         [Display(Name = " Product")]
         [Required]

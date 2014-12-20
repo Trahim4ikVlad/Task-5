@@ -14,10 +14,12 @@ namespace BusinessLayer
     {
         IList<OrderDto> GetAllOrders();
         IList<OrderDto> GetOrders(Func<Order, bool> where);
-        OrderDto GetOrder(Func<OrderDto, bool> where);
+        OrderDto GetOrderBy(int id);
 
         IEnumerable<OrderDto> Search(SearchSpecification specification);
-        
+
+        IEnumerable<OrderDto> OrderBy(Func<OrderDto, string> where);
+
         void Add(OrderDto orderDto);
         void Update(OrderDto orderDto);
         void Remove(OrderDto orderDto);

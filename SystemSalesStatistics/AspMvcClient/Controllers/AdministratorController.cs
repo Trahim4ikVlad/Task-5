@@ -7,11 +7,12 @@ using System.Web.Mvc;
 using System.Web.Security;
 using AspMvcClient.Models;
 using BusinessLayer;
-using AutoMapper;
 using BusinessLayer.DTOEntity;
 using BusinessLayer.Specification;
+using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
 using WebMatrix.WebData;
-
+using PagedList;
+using PagedList.Mvc;
 
 namespace AspMvcClient.Controllers
 {
@@ -20,10 +21,16 @@ namespace AspMvcClient.Controllers
     {
        private  readonly IWorker _worker = new Worker();
 
-
-        public ActionResult List()
+        public ActionResult Index()
         {
-            return View(_worker.GetAllOrders().ToOrderModels());
+            return View();
+        }
+
+        public ActionResult List(int? page)
+        {
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            return View(_worker.GetAllOrders().ToOrderModels().ToPagedList(pageNumber,pageSize));
         }
 
         public ActionResult Create()
@@ -39,18 +46,16 @@ namespace AspMvcClient.Controllers
             {
                 _worker.Add(orderModel.ToOrderDto());
             }
-
             return RedirectToAction("List"); ;
         }
 
-        [HttpGet]
         public ActionResult EditOrder(int? id)
         {
             if (id == null)
             {
                 return HttpNotFound();
             }
-            OrderModel orderModel = _worker.GetOrder(x=>x.Id ==id).ToOrderModel();
+            OrderModel orderModel = _worker.GetOrderBy((int) id).ToOrderModel();
             return View(orderModel);
         }
 
@@ -61,36 +66,49 @@ namespace AspMvcClient.Controllers
             return RedirectToAction("List");
         }
 
-
-        public ActionResult Details(int? id)
+        [HttpGet]
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return HttpNotFound();
             }
-            OrderModel model = _worker.GetOrder(x=>x.Id==id).ToOrderModel();
-            if (model == null)
+            OrderModel orderModel = _worker.GetOrderBy((int)id).ToOrderModel();
+            if (orderModel == null)
             {
                 return HttpNotFound();
             }
-            return View(model);
+            return View(orderModel);
         }
-        /*
-        public ActionResult Search()
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+
+            OrderModel orderModel = _worker.GetOrderBy((int)id).ToOrderModel();
+            if (orderModel == null)
+            {
+                return HttpNotFound();
+            }
+
+            _worker.Remove(orderModel.ToOrderDto());
+            return RedirectToAction("List");
         }
 
-        [HttpPost]
-        public ActionResult Search(SearchModel model)
+        public ActionResult OrderSearch(string clientName, string managerName, string productName)
         {
-            if (model != null)
+            SearchModel search = new SearchModel()
             {
-                //_worker.Search(model.ToSearchSpecification());
-            }
-            return View();
+                ClientName = clientName,
+            
+            };
+
+            var allorder = _worker.Search(search.ToSearchSpecification()).ToOrderModels();
+            return PartialView(allorder);
         }
-        */
     }
     #region
     
