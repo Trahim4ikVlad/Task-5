@@ -6,15 +6,18 @@
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")
+      @Scripts.Render("~/bundles/modernizr")
+       @* @Styles.Render("~/Content/bootstrap.min.css")
+@Styles.Render("~/Content/bootstrap-responsive.min.css")*@
     </head>
     <body>
-         <!--стили jquery ui-->
+     <!--стили jquery ui-->
     @Styles.Render("~/Content/themes/base/css")
     <!--сама библиотека jquey ui-->
     @Scripts.Render("~/bundles/jqueryui")
+       
 
-         <script type="text/javascript">
+        <script type="text/javascript">
             $(function () {
                 if (!Modernizr.inputtypes.date) {
                     $(function () {
@@ -38,18 +41,13 @@
                         <ul id="menu">
                             @if (User.IsInRole("Administrator"))
                             {
-                                <li>@Html.ActionLink("Home", "Index", "Home")</li>@*
-                                <li>@Html.ActionLink("Managment orders", "List", "Administrator")</li>
-                                  <li>@Html.ActionLink("Create new order", "Create", "Administrator")</li>
-                            <li>@Html.ActionLink("Managment users", "ListUser", "Administrator")</li>*@
-                             
+                                <li>@Html.ActionLink("Home", "Index", "Home")</li>
                                 <li>@Html.ActionLink("Registration user", "Register", "Account")</li> 
                                 <li>@Html.ActionLink("About", "About", "Home")</li>
-                                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>  
+                                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>   
                                 <li>@Html.ActionLink("Managment orders", "List", "Administrator")</li>  
-                                <li>@Html.ActionLink("Create orders", "Create", "Administrator")</li>   
-                                <li>@Html.ActionLink("Search", "Index", "Administrator")</li>   
-                            }
+                                <li>@Html.ActionLink("Search orders", "OrderSearch", "Administrator")</li>  
+                             }
                             else
                             {
                                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
@@ -58,6 +56,7 @@
                                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                             }
                         </ul>
+ 
                     </nav>
                 </div>
             </div>

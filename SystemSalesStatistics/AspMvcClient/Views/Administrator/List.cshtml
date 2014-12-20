@@ -8,20 +8,18 @@
 <link href="@Url.Content("~/Content/themes/base/jquery-ui.css")" rel="stylesheet" type="text/css" />
 <script src="@Url.Content("~/Scripts/jquery-ui-1.8.24.min.js")" type="text/javascript"></script>
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
-<h2>List</h2>
-
-<p>
+<p id="lin">
     @Html.ActionLink("Create New", "Create")
 </p>
 
 <div id="content">
-    <table>
+    <table class="simple-little-table">
         <tr>
             <th>
                 Date
             </th>
             <th>
-                ProductName
+                Product
             </th>
             <th>
                 Cost
@@ -32,7 +30,9 @@
             <th>
                 Manager
             </th>
-            <th></th>
+            <th>
+                Action
+            </th>
         </tr>
 
         @foreach (var item in Model) {
@@ -59,7 +59,6 @@
                 </td>
             </tr>
         }
-
     </table>
     <br />
  Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount

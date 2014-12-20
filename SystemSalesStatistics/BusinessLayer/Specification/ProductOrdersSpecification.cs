@@ -18,7 +18,7 @@ namespace BusinessLayer.Specification
 
         public IEnumerable<OrderDto> SatisfiedBy(IEnumerable<OrderDto> orders)
         {
-            return _productName!=null ? orders.Where(x => x.ProductName == _productName) : orders;
+            return !String.IsNullOrEmpty(_productName) ? orders.Where(x => x.ProductName.Contains(_productName)) : orders;
         }
     }
 }

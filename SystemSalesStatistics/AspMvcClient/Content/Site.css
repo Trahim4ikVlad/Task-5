@@ -6,30 +6,43 @@
 
 body {
     background-color: #fff;
-    border-top: solid 10px #000;
+    border-top: solid 5px #428bca;
     color: #333;
     font-size: .85em;
     font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
     margin: 0;
     padding: 0;
 }
-
 a {
     color: #333;
     outline: none;
     padding-left: 3px;
     padding-right: 3px;
-    text-decoration: underline;
+    text-decoration: none;
 }
 
-    a:link, a:visited,
+    a:link, a:visited {
+         color: #428bca;
+         text-decoration: none;
+    }
     a:active, a:hover {
-        color: #333;
+        color: white;
+        text-decoration: none;
+    }
+     a:hover {
+        background-color: #428bca;
     }
 
-    a:hover {
-        background-color: #c7d1d6;
+    #lin {
+       display: inline-block;
+    padding: 10px;
+    margin: 10px;
+        font-size: 18px;
+    color: white;
+    font-weight: normal;
+    text-decoration: none;
     }
+   
 
 header, footer, hgroup,
 nav, section {
@@ -67,18 +80,22 @@ h4, h5, h6 {
 
 h1 {
     font-size: 2em;
+    font-weight: normal;
 }
 
 h2 {
     font-size: 1.75em;
+    font-weight: normal;
 }
 
 h3 {
     font-size: 1.2em;
+    font-weight: normal;
 }
 
 h4 {
     font-size: 1.1em;
+    font-weight: normal;
 }
 
 h5, h6 {
@@ -181,7 +198,7 @@ footer {
 ----------------------------------------------------------*/
 ul#menu {
     font-size: 1.3em;
-    font-weight: 600;
+    font-weight: normal;
     margin: 0 0 5px;
     padding: 0;
     text-align: right;
@@ -200,7 +217,7 @@ ul#menu {
         }
 
         ul#menu li a:hover {
-            color: #333;
+            color: #428bca;
             text-decoration: none;
         }
 
@@ -586,6 +603,104 @@ tr.pager td {
     padding: 0 0.25em 0 0;
 }
 
+.simple-little-table {
+	font-family:Arial, Helvetica, sans-serif;
+	color:#666;
+	font-size:12px;
+	text-shadow: 1px 1px 0px #fff;
+	background:#eaebec;
+	margin:20px;
+	border:#ccc 1px solid;
+	border-collapse:separate;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	-moz-box-shadow: 0 1px 2px #d1d1d1;
+	-webkit-box-shadow: 0 1px 2px #d1d1d1;
+	box-shadow: 0 1px 2px #d1d1d1;
+}
+.simple-little-table th {
+	font-weight:bold;
+	padding:21px 25px 22px 25px;
+	border-top:1px solid #fafafa;
+	border-bottom:1px solid #e0e0e0;
+ 
+	background: #ededed;
+	background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#ebebeb));
+	background: -moz-linear-gradient(top,  #ededed,  #ebebeb);
+}
+.simple-little-table th:first-child{
+	text-align: left;
+	padding-left:20px;
+}
+.simple-little-table tr:first-child th:first-child{
+	-moz-border-radius-topleft:3px;
+	-webkit-border-top-left-radius:3px;
+	border-top-left-radius:3px;
+}
+.simple-little-table tr:first-child th:last-child{
+	-moz-border-radius-topright:3px;
+	-webkit-border-top-right-radius:3px;
+	border-top-right-radius:3px;
+}
+.simple-little-table tr{
+	text-align: center;
+	padding-left:20px;
+}
+.simple-little-table tr td:first-child{
+	text-align: left;
+	padding-left:20px;
+	border-left: 0;
+}
+.simple-little-table tr td {
+	padding:18px;
+	border-top: 1px solid #ffffff;
+	border-bottom:1px solid #e0e0e0;
+	border-left: 1px solid #e0e0e0;
+	
+	background: #fafafa;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fbfbfb), to(#fafafa));
+	background: -moz-linear-gradient(top,  #fbfbfb,  #fafafa);
+}
+.simple-little-table tr:nth-child(even) td{
+	background: #f6f6f6;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#f6f6f6));
+	background: -moz-linear-gradient(top,  #f8f8f8,  #f6f6f6);
+}
+.simple-little-table tr:last-child td{
+	border-bottom:0;
+}
+.simple-little-table tr:last-child td:first-child{
+	-moz-border-radius-bottomleft:3px;
+	-webkit-border-bottom-left-radius:3px;
+	border-bottom-left-radius:3px;
+}
+.simple-little-table tr:last-child td:last-child{
+	-moz-border-radius-bottomright:3px;
+	-webkit-border-bottom-right-radius:3px;
+	border-bottom-right-radius:3px;
+}
+.simple-little-table tr:hover td{
+	background: #f2f2f2;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#f0f0f0));
+	background: -moz-linear-gradient(top,  #f2f2f2,  #f0f0f0);	
+}
+ 
+.simple-little-table a:link {
+	color: #428bca;
+	font-weight: normal;
+	text-decoration:none;
+}
+.simple-little-table a:visited {
+	color: #428bca;
+	font-weight:normal;
+	text-decoration:none;
+}
+.simple-little-table a:active,
+.simple-little-table a:hover {
+	color: white;
+	text-decoration:none;
+}
 
 /********************
 *   Mobile Styles   *

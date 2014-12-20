@@ -80,7 +80,7 @@ namespace AspMvcClient.Controllers
                 try
                 {
                     WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                    WebSecurity.Login(model.UserName, model.Password);
+                   // WebSecurity.Login(model.UserName, model.Password);
                     Roles.AddUsersToRole(new[] { model.UserName }, "User");
                     return RedirectToAction("Index", "Home");
                 }
@@ -89,7 +89,6 @@ namespace AspMvcClient.Controllers
                     ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
                 }
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }

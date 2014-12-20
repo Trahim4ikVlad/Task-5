@@ -4,7 +4,7 @@
     ViewBag.Title = "EditOrder";
 }
 
-<h2>EditOrder</h2>
+<h2>Edit order</h2>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
@@ -14,7 +14,7 @@
         <legend>OrderModel</legend>
 
         @Html.HiddenFor(model => model.Id)
-
+        
         <div class="editor-label">
             @Html.LabelFor(model => model.OrderDate)
         </div>

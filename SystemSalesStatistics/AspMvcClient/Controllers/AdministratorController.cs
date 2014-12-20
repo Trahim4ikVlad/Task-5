@@ -97,20 +97,8 @@ namespace AspMvcClient.Controllers
             _worker.Remove(orderModel.ToOrderDto());
             return RedirectToAction("List");
         }
-
-        public ActionResult OrderSearch(string clientName, string managerName, string productName)
-        {
-            SearchModel search = new SearchModel()
-            {
-                ClientName = clientName,
-            
-            };
-
-            var allorder = _worker.Search(search.ToSearchSpecification()).ToOrderModels();
-            return PartialView(allorder);
-        }
     }
-    #region
+    #region conversion
     
     public static class ExtensionsMethod
     {

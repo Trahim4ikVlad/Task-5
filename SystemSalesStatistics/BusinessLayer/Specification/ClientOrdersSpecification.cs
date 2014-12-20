@@ -19,7 +19,7 @@ namespace BusinessLayer.Specification
 
         public IEnumerable<OrderDto> SatisfiedBy(IEnumerable<OrderDto> orders)
         {
-            return _clientName!=null ? orders.Where(x => x.Client.Name == _clientName) : orders;
+            return !String.IsNullOrEmpty(_clientName) ? orders.Where(x => x.Client.Name.Contains(_clientName)) : orders;
         }
     }
 }
