@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Charts";
+}
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script type="text/javascript" src="~/Scripts/jsapi.js"></script>
+
+<script type="text/javascript">
+    
+    google.load("visualization", "1", { packages: ["corechart"] });
+</script>
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            url: '@Url.Action("GetList")',
+            data: '{}',
+            success: function (chartsdata) {
+
+                var data = new google.visualization.DataTable();
+                
+                data.addColumn('string', 'ManagerName');
+                data.addColumn('number', 'SumOrders');
+
+                for (var i = 0; i < chartsdata.length; i++) {
+                    data.addRow([chartsdata[i].ManagerName, chartsdata[i].SumOrders]);
+                }
+
+                var chart = new google.visualization.PieChart(document.getElementById('chartdiv'));
+
+                chart.draw(data,
+                {
+                    title: "PRICE CHART SALES MANAGERS",
+                    position: "top",
+                    fontsize: "14px",
+                    chartArea: { width: '50%' },
+                });
+            },
+            error: function () {
+                alert("Error loading data! Please try again.");
+            }
+        });
+    })
+</script>
+<div id="chartdiv" style="width: 600px; height: 350px;">
+</div>

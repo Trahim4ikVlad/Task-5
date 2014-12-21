@@ -75,7 +75,7 @@ namespace DataAccessLayer
             return _managerRepository.GetAll();
         }
 
-        public IList<Order> GetOrders()
+        public IEnumerable<Order> GetOrders()
         {
             return _orderRepository.GetAll();
         }
@@ -90,7 +90,7 @@ namespace DataAccessLayer
             return _managerRepository.GetList(where);
         }
 
-        public IList<Order> GetOrders(Func<Order, bool> where)
+        public IEnumerable<Order> GetOrders(Func<Order, bool> where)
         {
             return _orderRepository.GetList(where);
         }

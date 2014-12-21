@@ -16,7 +16,6 @@ namespace BusinessLayer.Specification
         {
             _clientName = clientName;
         }
-
         public IEnumerable<OrderDto> SatisfiedBy(IEnumerable<OrderDto> orders)
         {
             return !String.IsNullOrEmpty(_clientName) ? orders.Where(x => x.Client.Name.Contains(_clientName)) : orders;

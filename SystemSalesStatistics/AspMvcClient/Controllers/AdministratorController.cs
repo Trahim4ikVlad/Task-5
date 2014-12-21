@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Web.UI.WebControls;
 using AspMvcClient.Models;
 using BusinessLayer;
 using BusinessLayer.DTOEntity;
@@ -20,11 +21,6 @@ namespace AspMvcClient.Controllers
     public class AdministratorController : Controller
     {
        private  readonly IWorker _worker = new Worker();
-
-        public ActionResult Index()
-        {
-            return View();
-        }
 
         public ActionResult List(int? page)
         {
@@ -46,7 +42,7 @@ namespace AspMvcClient.Controllers
             {
                 _worker.Add(orderModel.ToOrderDto());
             }
-            return RedirectToAction("List"); ;
+            return RedirectToAction("List"); 
         }
 
         public ActionResult EditOrder(int? id)
@@ -97,6 +93,20 @@ namespace AspMvcClient.Controllers
             _worker.Remove(orderModel.ToOrderDto());
             return RedirectToAction("List");
         }
+         
+        [HttpGet]
+        public ActionResult Search()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Search(SearchModel model)
+        {
+            var resultSearch = _worker.Search(model.ToSearchSpecification()).ToOrderModels();
+            return PartialView("_partialSearch", resultSearch);
+        }
+      
     }
     #region conversion
     

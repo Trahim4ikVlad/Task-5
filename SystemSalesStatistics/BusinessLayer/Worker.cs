@@ -18,7 +18,7 @@ namespace BusinessLayer
            _repository = new Repository();
         }
 
-        public IList<OrderDto> GetAllOrders()
+        public IEnumerable<OrderDto> GetAllOrders()
         {
             return _repository.GetOrders().Select(order => ToOrderDto(order)).ToList();
         }

@@ -1,0 +1,37 @@
+﻿@model AspMvcClient.Models.SearchModel
+
+@{
+    ViewBag.Title = "Search";
+}
+
+<link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+
+<h2>Filtering orders</h2>
+
+<link href="@Url.Content("~/Content/themes/base/jquery-ui.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Scripts/jquery-ui-1.8.24.min.js")" type="text/javascript"></script>
+@*<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />*@
+
+
+<div class="search">
+@using (Ajax.BeginForm("Search", "User", new AjaxOptions { UpdateTargetId = "results" }))    
+{
+    <div id="serching">
+        <input type="text" class="search rounded" name="clientName" placeholder="Client" />
+        <input type="text" class="search rounded" name="managerName" placeholder="Manager" />
+        <input type="date" class="search rounded"  name="orderDate" />
+        <input type="text" class="search rounded" name="productName" placeholder="Product" />
+    </div>
+    
+    <p>
+        <input type="submit" value="Filter" />
+    </p> 
+}
+    </div>
+
+<table id="results" class="simple-little-table">
+    </table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

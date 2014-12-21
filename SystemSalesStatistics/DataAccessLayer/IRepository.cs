@@ -23,10 +23,10 @@ namespace DataAccessLayer
 
         IList<Client> GetClients();
         IList<Manager> GetManagers();
-        IList<Order> GetOrders();
+        IEnumerable<Order> GetOrders();
         IList<Client> GetClients(Func<Client, bool> where);
         IList<Manager> GetManagers(Func<Manager, bool> where);
-        IList<Order> GetOrders(Func<Order, bool> where);
+        IEnumerable<Order> GetOrders(Func<Order, bool> where);
 
         Client GetClient(Func<Client, bool> @where);
         Manager GetManager(Func<Manager, bool> where);

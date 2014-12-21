@@ -15,6 +15,8 @@ namespace AspMvcClient.Models
         public string ManagerName { get; set; }
 
          [Display(Name = " Date")]
+         [DataType(DataType.Date)]
+         [DisplayFormat(DataFormatString = "{0:dd'/'MM'/'yyyy}", ApplyFormatInEditMode = true)]
         public DateTime OrderDate { get; set; }
 
          [Display(Name = "Product")]

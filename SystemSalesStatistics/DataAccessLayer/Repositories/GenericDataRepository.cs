@@ -95,8 +95,7 @@ namespace DataAccessLayer.Repositories
             using (var context = new DBEntities())
             {
                 foreach (T item in items)
-                {
-                   
+                { 
                     context.Entry(item).State = System.Data.EntityState.Deleted;
                 }
                 context.SaveChanges();

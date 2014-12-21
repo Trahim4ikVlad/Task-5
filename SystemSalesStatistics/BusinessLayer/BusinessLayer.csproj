@@ -46,15 +46,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="DTOEntity\ClientDto.cs" />
     <Compile Include="DTOEntity\ManagerDto.cs" />
     <Compile Include="DTOEntity\OrderDto.cs" />
     <Compile Include="IWorker.cs" />
-    <Compile Include="Mappers\ClientMapper.cs" />
-    <Compile Include="Mappers\ManagerMapper.cs" />
-    <Compile Include="Mappers\MapperBase.cs" />
-    <Compile Include="Mappers\OrderMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Specification\ClientOrdersSpecification.cs" />
     <Compile Include="Specification\DateOrdersSpecification.cs" />

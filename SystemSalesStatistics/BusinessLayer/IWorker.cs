@@ -12,7 +12,8 @@ namespace BusinessLayer
 {
     public interface IWorker
     {
-        IList<OrderDto> GetAllOrders();
+        IEnumerable<OrderDto> GetAllOrders();
+
         IList<OrderDto> GetOrders(Func<Order, bool> where);
         OrderDto GetOrderBy(int id);
 
